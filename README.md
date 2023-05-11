@@ -20,7 +20,7 @@ cd front-end-poke-api
  ```
 4. Start the development server:
 ```Script
- npm install
+ npm run dev
  ```
 
 The application should now be running on [http://localhost:3000](http://localhost:3000).
