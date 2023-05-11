@@ -18,7 +18,7 @@ export const PokemonInput = ({ onNewValue }) => {
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} >
             <input
                 type="text"
                 placeholder="Search Pokémon"

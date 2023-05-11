@@ -1,23 +1,51 @@
-import { useState } from "react"
 import { PokemonInput } from "./components/PokemonInput";
 import { PokemonGrid } from "./components/PokemonGrid";
+import { useEffect, useState } from "react"
+import { searchPokemon } from "./helpers/getPokemons"
+import { Container, Row, Col } from "react-bootstrap";
+import { PokemonGridLength } from "./components/PokemonGridLength";
+import { OffsetButtons } from "./components/OffsetButons";
 
 function App() {
 
-  const [pokemon, setPokemon] = useState("");
+  const [pokemonName, setPokemonName] = useState("");
+  const [pokemonList, setPokemonList] = useState([])
+  const [rowLength, setRowLength] = useState(3)
+  const [offset, setOffset] = useState(0)
+
+  const getPokemonList = async (pokemonName) => {
+    await searchPokemon(pokemonName,offset).then(newPokemonList => {
+      setPokemonList(newPokemonList)
+    })
+  }
+
+  useEffect(() => {
+    getPokemonList(pokemonName, offset);
+  }, [pokemonName, offset])
 
   return (
-    <>
-      <h1>PokéAPI</h1>
+    <Container style={{ paddingBottom: "3rem" }}>
+      <h1 style={{ textAlign: "center" }}>PokéAPI</h1>
 
-      <PokemonInput 
-        onNewValue={setPokemon}
+      <Row className="mb-4 mt-1">
+        <Col >
+          <PokemonInput onNewValue={setPokemonName} />
+        </Col>
+        <Col style={{ width: '100%' }}>
+          <PokemonGridLength onNewLength={setRowLength} />
+        </Col>
+      </Row>
+
+
+      <PokemonGrid
+        pokemonList={pokemonList}
+        rowLength={rowLength}
       />
 
-      <PokemonGrid 
-        pokemon={pokemon}
+      <OffsetButtons
+        onNewOffset={setOffset}
       />
-    </>
+    </Container>
   )
 }
 

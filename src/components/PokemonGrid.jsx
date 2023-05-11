@@ -1,35 +1,39 @@
-import { useEffect, useState } from "react"
-import { getAllPokemon, getPokemon } from "../helpers/getPokemons"
 import PokemonItem from "./PokemonItem"
+import { Row, Col, Button } from "react-bootstrap";
 
-export const PokemonGrid = ({ pokemon }) => {
+export const PokemonGrid = ({ pokemonList , rowLength}) => {
 
-    const [pokemonList, setPokemonList] = useState([])
 
-    const getPokemonList = async () => {
-        await getAllPokemon().then(newPokemonList => {
-            setPokemonList(newPokemonList)
-        })
-    }
+    const pokemonChunks = pokemonList.reduce((resultArray, item, index) => {
+        const chunkIndex = Math.floor(index / rowLength);
 
-    useEffect(() => {
-        getPokemonList(pokemon);
-    }, [pokemon])
+        if (!resultArray[chunkIndex]) {
+            resultArray[chunkIndex] = [];
+        }
 
+        resultArray[chunkIndex].push(item);
+
+        return resultArray;
+    }, []);
 
     return (
         <>
-            <h1>{pokemon}</h1>
-                {
-                    pokemonList.map(pokemon => {
-                        return <PokemonItem key={pokemon.name}
-                            title={pokemon.name}
-                            image={pokemon.image}
-                            types={pokemon.types}
-                      />
-                    })
-
-                }
+            {
+                pokemonChunks.map((chunk, rowIndex) => (
+                    <Row key={rowIndex} className="mb-4">
+                        {chunk.map((pokemon) => (
+                            <Col key={pokemon.name} className="col">
+                                <PokemonItem
+                                    name={pokemon.name}
+                                    image={pokemon.image}
+                                    types={pokemon.types}
+                                />
+                            </Col>
+                        ))}
+                    </Row>
+                ))
+            }
         </>
-    )
+
+    );
 }
