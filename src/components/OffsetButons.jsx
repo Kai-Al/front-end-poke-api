@@ -8,9 +8,12 @@ export const OffsetButtons = ({ onNewOffset }) => {
     const [offset, setOffset] = useState(0);
 
     const handleOffsetChange = (increment) => {
-        if(offset+increment < 0) return;
-        setOffset(offset + increment);
-        onNewOffset(offset)
+        const newOffset = offset + increment;
+        if (newOffset < 0) {
+            return;
+        }
+        setOffset(newOffset);
+        onNewOffset(newOffset);
     };
 
     return (

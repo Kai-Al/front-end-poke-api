@@ -1,10 +1,10 @@
 import { PokemonInput } from "./components/PokemonInput";
 import { PokemonGrid } from "./components/PokemonGrid";
 import { useEffect, useState } from "react"
-import { searchPokemon } from "./helpers/getPokemons"
 import { Container, Row, Col } from "react-bootstrap";
-import { PokemonGridLength } from "./components/PokemonGridLength";
+import { GenericSelect } from "./components/GenericSelect";
 import { OffsetButtons } from "./components/OffsetButons";
+import { searchByName } from "./helpers/getPokemons";
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
   const [offset, setOffset] = useState(0)
 
   const getPokemonList = async (pokemonName) => {
-    await searchPokemon(pokemonName,offset).then(newPokemonList => {
+    await searchByName(pokemonName, offset).then(newPokemonList => {
       setPokemonList(newPokemonList)
     })
   }
@@ -26,22 +26,21 @@ function App() {
   return (
     <Container style={{ paddingBottom: "3rem" }}>
       <h1 style={{ textAlign: "center" }}>PokéAPI</h1>
-
       <Row className="mb-4 mt-1">
         <Col >
           <PokemonInput onNewValue={setPokemonName} />
         </Col>
         <Col style={{ width: '100%' }}>
-          <PokemonGridLength onNewLength={setRowLength} />
+          <GenericSelect
+            onNewValue={setRowLength}
+            valuesToDisplay={[3, 5, 7]}
+          />
         </Col>
       </Row>
-
-
       <PokemonGrid
         pokemonList={pokemonList}
         rowLength={rowLength}
       />
-
       <OffsetButtons
         onNewOffset={setOffset}
       />

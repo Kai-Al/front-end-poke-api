@@ -12,9 +12,7 @@ export const PokemonInput = ({ onNewValue }) => {
 
     const onSubmit = (event) => {
         event.preventDefault()
-
         onNewValue(inputValue)
-        setInputValue("")
     }
 
     return (

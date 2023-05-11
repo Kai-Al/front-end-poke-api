@@ -1,35 +1,44 @@
-export const searchPokemon = async (pokemonName, offset = 0) => {
-  let pokemonList = [];
+const endpoint = "https://pokeapi.co/api/v2"
 
-  console.log(offset);
-  if (pokemonName === "") {
-    pokemonList = await getAllPokemon(offset);
-  } else {
-    pokemonList = [await getPokemon(pokemonName)];
+const getPokemonByName = async (pokemonName) => {
+  const url = `${endpoint}/pokemon/${pokemonName.toLowerCase()}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
+
+export const searchByName = async (pokemonName, offset = 0) => {
+  const url = pokemonName
+    ? `${endpoint}/pokemon/${pokemonName.toLowerCase()}`
+    : `${endpoint}/pokemon/?limit=10&offset=${offset}`;
+
+  const response = await fetch(url);
+  const data = await response.json();
+  if (pokemonName) {
+    return [
+      {
+        name: data.name,
+        image: data.sprites.front_default,
+        types: data.types.map((type) => type.type.name),
+      },
+    ];
   }
-  const pokemonListFiltered = pokemonList.map((pokemon) => ({
+
+  const pokemonList = await Promise.all(
+    data.results.map((pokemon) => getPokemonByName(pokemon.name))
+  );
+
+  return pokemonList.map((pokemon) => ({
     name: pokemon.name,
     image: pokemon.sprites.front_default,
     types: pokemon.types.map((type) => type.type.name),
   }));
-  return pokemonListFiltered;
 };
 
-const getAllPokemon = async (offset) => {
-  const url = `https://pokeapi.co/api/v2/pokemon/?limit=10&offset=${offset}`;
-  let data = await fetch(url).then((results) => {
-    return results.json();
-  });
-  const pokemonList = await Promise.all(
-    data.results.map((pokemon) => getPokemon(pokemon.name))
-  );
-  return pokemonList;
-};
-
-const getPokemon = async (pokemonName) => {
-  const url = `https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`;
-  const pokemonFound = await fetch(url).then((results) => {
-    return results.json();
-  });
-  return pokemonFound;
+export const getTypes = async () => {
+  const url = `${endpoint}/type`;
+  const response = await fetch(url);
+  const data = await response.json();
+  console.log(data.results)
+  return data.results;
 };
