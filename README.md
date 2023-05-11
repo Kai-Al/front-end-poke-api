@@ -6,10 +6,22 @@ This project was bootstrapped with [Vite](https://vitejs.dev/) and [Node.js](htt
 
 To get started with this project, follow these steps:
 
-1. Clone the repository: `(https://github.com/sebastiangi312/front-end-poke-api.git)`
-2. Navigate into the project directory: 
-3. Install dependencies: `npm install`
-4. Start the development server: `npm run dev`
+1. Clone the repository:
+ ```Git
+git clone https://github.com/sebastiangi312/Backend-assessment--Python---fastAPI.git
+```
+2. Navigate into the project directory:
+```Script
+cd front-end-poke-api
+``` 
+3. Install dependencies:
+ ````Script
+ npm install
+ ```
+4. Start the development server:
+````Script
+ npm install
+ ```
 
 The application should now be running on [http://localhost:3000](http://localhost:3000).
 
