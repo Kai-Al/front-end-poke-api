@@ -15,11 +15,11 @@ git clone https://github.com/sebastiangi312/Backend-assessment--Python---fastAPI
 cd front-end-poke-api
 ``` 
 3. Install dependencies:
- ````Script
+ ```Script
  npm install
  ```
 4. Start the development server:
-````Script
+```Script
  npm install
  ```
 
