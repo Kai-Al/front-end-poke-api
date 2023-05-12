@@ -1,29 +1,25 @@
-import { useState } from "react"
-
+import { useState } from "react";
 
 export const PokemonInput = ({ onNewValue }) => {
+  const [inputValue, setInputValue] = useState("");
 
+  const onInputChange = ({ target }) => {
+    setInputValue(target.value);
+  };
 
-    const [inputValue, setInputValue] = useState("")
+  const onSubmit = (event) => {
+    event.preventDefault();
+    onNewValue(inputValue);
+  };
 
-    const onInputChange = ({ target }) => {
-        setInputValue(target.value)
-    }
-
-    const onSubmit = (event) => {
-        event.preventDefault()
-        onNewValue(inputValue)
-    }
-
-    return (
-        <form onSubmit={onSubmit} >
-            <input
-                type="text"
-                placeholder="Search Pokémon"
-                value={inputValue}
-                onChange={onInputChange}
-            />
-        </form>
-
-    )
-}
+  return (
+    <form onSubmit={onSubmit}>
+      <input
+        type="text"
+        placeholder="Search Pokémon"
+        value={inputValue}
+        onChange={onInputChange}
+      />
+    </form>
+  );
+};

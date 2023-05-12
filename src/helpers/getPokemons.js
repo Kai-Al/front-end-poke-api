@@ -1,4 +1,4 @@
-const endpoint = "https://pokeapi.co/api/v2"
+const endpoint = "https://pokeapi.co/api/v2";
 
 const getPokemonByName = async (pokemonName) => {
   const url = `${endpoint}/pokemon/${pokemonName.toLowerCase()}`;
@@ -14,6 +14,7 @@ export const searchByName = async (pokemonName, offset = 0) => {
 
   const response = await fetch(url);
   const data = await response.json();
+
   if (pokemonName) {
     return [
       {
@@ -39,6 +40,6 @@ export const getTypes = async () => {
   const url = `${endpoint}/type`;
   const response = await fetch(url);
   const data = await response.json();
-  console.log(data.results)
+  console.log(data.results);
   return data.results;
 };
