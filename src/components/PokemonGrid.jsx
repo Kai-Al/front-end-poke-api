@@ -1,39 +1,34 @@
-import PokemonItem from "./PokemonItem"
+import PokemonItem from "./PokemonItem";
 import { Row, Col, Button } from "react-bootstrap";
 
-export const PokemonGrid = ({ pokemonList , rowLength}) => {
+export const PokemonGrid = ({ pokemonList, rowLength }) => {
+  const pokemonChunks = pokemonList.reduce((resultArray, item, index) => {
+    const chunkIndex = Math.floor(index / rowLength);
 
+    if (!resultArray[chunkIndex]) {
+      resultArray[chunkIndex] = [];
+    }
 
-    const pokemonChunks = pokemonList.reduce((resultArray, item, index) => {
-        const chunkIndex = Math.floor(index / rowLength);
+    resultArray[chunkIndex].push(item);
 
-        if (!resultArray[chunkIndex]) {
-            resultArray[chunkIndex] = [];
-        }
+    return resultArray;
+  }, []);
 
-        resultArray[chunkIndex].push(item);
-
-        return resultArray;
-    }, []);
-
-    return (
-        <>
-            {
-                pokemonChunks.map((chunk, rowIndex) => (
-                    <Row key={rowIndex} className="mb-4">
-                        {chunk.map((pokemon) => (
-                            <Col key={pokemon.name} className="col">
-                                <PokemonItem
-                                    name={pokemon.name}
-                                    image={pokemon.image}
-                                    types={pokemon.types}
-                                />
-                            </Col>
-                        ))}
-                    </Row>
-                ))
-            }
-        </>
-
-    );
-}
+  return (
+    <>
+      {pokemonChunks.map((chunk, rowIndex) => (
+        <Row key={rowIndex} className="mb-4">
+          {chunk.map((pokemon) => (
+            <Col key={pokemon.name} className="col">
+              <PokemonItem
+                name={pokemon.name}
+                image={pokemon.image}
+                types={pokemon.types}
+              />
+            </Col>
+          ))}
+        </Row>
+      ))}
+    </>
+  );
+};
