@@ -8,7 +8,7 @@ To get started with this project, follow these steps:
 
 1. Clone the repository:
  ```Git
-git clone https://github.com/sebastiangi312/Backend-assessment--Python---fastAPI.git
+git clone https://github.com/sebastiangi312/front-end-poke-api.git
 ```
 2. Navigate into the project directory:
 ```Script
