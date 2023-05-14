@@ -1,7 +1,13 @@
+import { GenericSelect } from "./GenericSelect";
 import PokemonItem from "./PokemonItem";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
+import { useState } from "react";
 
-export const PokemonGrid = ({ pokemonList, rowLength }) => {
+export const PokemonGrid = ({ pokemonList }) => {
+
+    
+  const [rowLength, setRowLength] = useState(3);
+
   const pokemonChunks = pokemonList.reduce((resultArray, item, index) => {
     const chunkIndex = Math.floor(index / rowLength);
 
@@ -29,6 +35,12 @@ export const PokemonGrid = ({ pokemonList, rowLength }) => {
           ))}
         </Row>
       ))}
+      <Row className="d-flex justify-content-end">
+        <GenericSelect
+            onNewValue={setRowLength}
+            valuesToDisplay={[3, 5, 7]}
+        />
+      </Row>
     </>
   );
 };
